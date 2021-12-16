@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Do we really need all of these references?
+using System;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
@@ -9,14 +10,17 @@ using System.Threading.Tasks;
 
 namespace Client
 {
+    ///<summary>
+    ///This program is a chat bot for work with local server by socket
+    ///</summary>
     class Program
     {
-        static int port = 8888; 
-        static string address = "127.0.0.1";
+        static int port = 8888;
+        static string address = "127.0.0.1";
         static string fileName = Guid.NewGuid().ToString() + ".txt";
         static List<string> names = new List<string>() { "Glen", "Max", "Tim", "John", "Andrew" };
-        static List<string> answers = new List<string>() 
-        { 
+        static List<string> answers = new List<string>()
+        {
             "Hello!", "How are you?", "What's it?", "Fine, thank you!", "Glad to see you.", "I am ok and you?", "Oh, it is a good place",
             "Let's play!", "Muhahaha", "ok"
         };
@@ -25,25 +29,21 @@ namespace Client
         {
             while (true)
             {
-                bool sendName = false;
-                bool needChat = true;
+                var sendName = false;
+                var needChat = false;
                 try
                 {
-                    IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
-
-                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    var ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
+                    var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);           
                     socket.Connect(ipPoint);
+                    needChat = true;
+                    Task.Run(() => writerActions(socket));
 
-                    //реализация для треда, а не tpl
-                    //var writerThread = new Thread(writerActions);
-                    //writerThread.Start(socket);
-                    Task.Run(()=>writerActions(socket));
-
-                    int times = rnd.Next(1, 5);
+                    var times = rnd.Next(1, 5);
 
                     while (SocketConnected(socket) && needChat)
                     {
-                        string message = "";
+                        var message = "";
                         if (sendName)
                         {
                             message = answers[rnd.Next(0, answers.Count)];
@@ -54,9 +54,9 @@ namespace Client
                             message = names[rnd.Next(0, names.Count)];
                             sendName = true;
                         }
-                        if (SocketConnected(socket) && message!="")
+                        if (SocketConnected(socket) && message != "")
                         {
-                            byte[] data = Encoding.Unicode.GetBytes(message);
+                            var data = Encoding.Unicode.GetBytes(message);
                             socket.Send(data);
                         }
                         if (times < 1)
@@ -65,7 +65,7 @@ namespace Client
                             Console.WriteLine("Client ended his task");
                         }
                         times = times - 1;
-                    }   
+                    }
 
                     socket.Shutdown(SocketShutdown.Both);
                     socket.Close();
@@ -77,32 +77,34 @@ namespace Client
                 if (needChat)
                 {
                     Console.WriteLine("Server closed all connections...");
-                    break;
                 }
+                Console.WriteLine("Try to reconnect to chat server...");                    
             }
-            Console.Read();
         }
-        static void writerActions(object obj)
+
+        ///<summary>
+        ///Task action for receive chat messages
+        ///</summary>
+        static void writerActions(Socket socket)
         {
             fileName = Guid.NewGuid().ToString() + ".txt";
-            var socket = (Socket)obj;
-            while(SocketConnected(socket))
+            while (SocketConnected(socket))
             {
                 try
                 {
-                    byte[] data = new byte[256];
-                    StringBuilder builder = new StringBuilder();
-                    int bytes = 0;
+                    var data = new byte[256];
+                    var builder = new StringBuilder();
+                    var bytes = 0;
 
                     do
                     {
                         bytes = socket.Receive(data, data.Length, 0);
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
-                    while (socket.Available > 0);
+                    while (SocketConnected(socket) && socket.Available > 0); // can anything go wrong here?
 
-                   
-                    using (StreamWriter sw = File.AppendText(Environment.CurrentDirectory +"\\"+ fileName))
+
+                    using (var sw = File.AppendText(Environment.CurrentDirectory + "\\" + fileName))
                     {
                         sw.WriteLine(builder.ToString());
                     }
@@ -114,12 +116,16 @@ namespace Client
             }
 
         }
-        static bool SocketConnected(Socket s)
+
+        ///<summary>
+        ///Test socket connection
+        ///</summary>
+        static bool SocketConnected(Socket socketInstance)
         {
             try
             {
-                bool part1 = s.Poll(1000, SelectMode.SelectRead);
-                bool part2 = (s.Available == 0);
+                var part1 = socketInstance.Poll(1000, SelectMode.SelectRead);
+                var part2 = (socketInstance.Available == 0);
                 if (part1 && part2)
                     return false;
                 else
@@ -128,7 +134,7 @@ namespace Client
             catch
             {
                 return false;
-            }           
+            }
         }
     }
 }
