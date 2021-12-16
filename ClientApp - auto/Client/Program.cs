@@ -101,7 +101,7 @@ namespace Client
                         bytes = socket.Receive(data, data.Length, 0);
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
-                    while (SocketConnected(socket) && socket.Available > 0); // can anything go wrong here?
+                    while (SocketConnected(socket) && socket.Available > 0);
 
 
                     using (var sw = File.AppendText(Environment.CurrentDirectory + "\\" + fileName))
