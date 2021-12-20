@@ -20,14 +20,23 @@ namespace AbstartFactory
         public void CookMasala(DateTime currentDate, Country country)
         {
             IAbstractSeasonRestaurantFactory factory;
-            if(IsSummerDate(currentDate))
+            try
             {
-                factory = new SummerFactory(cooker, country);
+                if (IsSummerDate(currentDate))
+                {
+                    factory = new SummerFactory(cooker, country);
+                }
+                else
+                {
+                    factory = new BasicFactory(cooker, country);
+                }
             }
-            else
+            catch (ArgumentOutOfRangeException)
             {
-                factory = new BasicFactory(cooker, country);
+                Console.WriteLine("Sorry, you need use correct County for our cooker.");
+                return;
             }
+            
             var masala = factory.CreateMasala();
             Console.WriteLine(masala.GetInformation());
         }

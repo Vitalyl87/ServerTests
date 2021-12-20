@@ -36,7 +36,7 @@ namespace AbstartFactory
                     factory.CreateMasala();
                     break;
                 default:
-                    Console.WriteLine("Sorry, you need say County for our cooker.");
+                    Console.WriteLine("Sorry, you need use correct County for our cooker.");
                     break;
             }
         }
