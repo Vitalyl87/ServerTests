@@ -7,6 +7,7 @@ namespace AbstartFactory
     {
         static void Main(string[] args)
         {
+            //menu for now
             var masalaCooker = new MasalaCooker(new Cooker());
             masalaCooker.CookMasala(DateTime.Now, Country.India);
             //summer menu

@@ -18,6 +18,9 @@ namespace Restaurant.Task2.Factoties
             this.cooker = cooker;
             this.country = country;
         }
+        /// <summary>
+        /// create masala for summer menu due to Country
+        /// </summary>
         public IRecity CreateMasala()
         {
             switch (country)

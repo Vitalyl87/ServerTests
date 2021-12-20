@@ -13,6 +13,9 @@ namespace Restaurant.Task1.Restaurants
         {
             this.cooker = cooker;
         }
+        /// <summary>
+        /// create masala for restaurant in Ukraine
+        /// </summary>
         public IMasala CreateMasala()
         {
             return new MasalaForUkraine(cooker);
