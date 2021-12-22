@@ -4,11 +4,11 @@ using System;
 namespace Restaurant.Task1.Recipes
 {
     /// <summary>
-    /// Cook masala for India restaurant
+    /// Cook masala for restaurant in India
     /// </summary>
-    public class MasalaForIndia : IMasala
+    public class MasalaForIndia : BaseMasala
     {
-        public MasalaForIndia(ICooker cooker)
+        public MasalaForIndia(ICooker cooker) : base (cooker)
         {
             Console.WriteLine("Start to cook masala [Restaurant in India]:");
             cooker.FryRice(200, Level.Strong);
@@ -17,10 +17,6 @@ namespace Restaurant.Task1.Recipes
             cooker.PepperRice(Level.Strong);
             cooker.SaltChicken(Level.Strong);
             cooker.PepperChicken(Level.Strong);
-        }
-        public string MasalaInformation()
-        {
-            return "This is masala for India.";
         }
     }
 }

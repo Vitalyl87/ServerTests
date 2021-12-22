@@ -1,38 +1,54 @@
 ﻿using AbstartFactory;
 using System;
+using System.Collections.Generic;
 
 namespace Restaurant.Task1
 {
     public class Cooker : ICooker
     {
+        public List<string> SecretHistory = new List<string>();
+        string information;
         public void FryChicken(int amount, Level level)
         {
-            Console.WriteLine($"Cook gets {amount} gram of chicken and fries it to {level} level");
+            information = $"Cook gets {amount} gram of chicken and fries it to {level} level";
+            Console.WriteLine(information);
+            SecretHistory.Add(information);
         }
 
         public void FryRice(int amount, Level level)
         {
-            Console.WriteLine($"Cook gets {amount} gram of rice and fries it to {level} level");
+            SecretHistory.Clear();
+            information = $"Cook gets {amount} gram of rice and fries it to {level} level";
+            Console.WriteLine(information);
+            SecretHistory.Add(information);
         }
 
         public void PepperChicken(Level level)
         {
-            Console.WriteLine($"Cook pepper chicken to {level} level");
+            information = $"Cook pepper chicken to {level} level";
+            Console.WriteLine(information);
+            SecretHistory.Add(information);
         }
 
         public void PepperRice(Level level)
         {
-            Console.WriteLine($"Cook pepper rice to {level} level");
+            information = $"Cook pepper rice to {level} level";
+            Console.WriteLine(information);
+            SecretHistory.Add(information);
         }
 
         public void SaltChicken(Level level)
         {
-            Console.WriteLine($"Cook salt chicken to {level} level");
+            information = $"Cook salt chicken to {level} level";
+            Console.WriteLine(information);
+            SecretHistory.Add(information);
         }
 
         public void SaltRice(Level level)
         {
-            Console.WriteLine($"Cook salt rice to {level} level");
+            information = $"Cook salt rice to {level} level";
+            Console.WriteLine(information);
+            SecretHistory.Add(information);
         }
     }
 }

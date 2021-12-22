@@ -4,12 +4,12 @@ using Restaurant.Task1.Recipes;
 namespace Restaurant.Task1.Restaurants
 {
     /// <summary>
-    /// Concrete fabric for Ukraine restaurant
+    /// Concrete fabric for ukrainian restaurant
     /// </summary>
-    class UkraineRestaurant : IAbstractRestaurantFactory
+    class UkrainianRestaurant : IAbstractRestaurantFactory
     {
         ICooker cooker;
-        public UkraineRestaurant(ICooker cooker)
+        public UkrainianRestaurant(ICooker cooker)
         {
             this.cooker = cooker;
         }

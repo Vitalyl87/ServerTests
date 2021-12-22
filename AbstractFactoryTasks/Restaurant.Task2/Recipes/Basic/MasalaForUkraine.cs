@@ -4,11 +4,11 @@ using System;
 namespace Restaurant.Task2.Recipes.Basic
 {
     /// <summary>
-    /// Cook basic masala for Ukraine restaurant
+    /// Cook basic masala for ukrainian restaurant
     /// </summary>
-    class MasalaForUkraine : IRecity
+    class MasalaForUkraine : BaseMasala
     {
-        public MasalaForUkraine(ICooker cooker)
+        public MasalaForUkraine(ICooker cooker) : base(cooker)
         {
             Console.WriteLine("Start to cook masala [Restaurant in Ukraine]:");
             cooker.FryRice(500, Level.Strong);
@@ -17,10 +17,6 @@ namespace Restaurant.Task2.Recipes.Basic
             cooker.PepperRice(Level.Low);
             cooker.SaltChicken(Level.Medium);
             cooker.PepperChicken(Level.Low);
-        }
-        public string GetInformation()
-        {
-            return "This is basic masala for Ukraine.";
         }
     }
 }

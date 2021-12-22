@@ -4,21 +4,21 @@ using Restaurant.Task1.Recipes;
 namespace Restaurant.Task1.Restaurants
 {
     /// <summary>
-    /// Concrete fabric for India restaurant
+    /// Concrete fabric for english restaurant
     /// </summary>
-    class IndiaRestaurant : IAbstractRestaurantFactory
+    class EnglishRestaurant : IAbstractRestaurantFactory
     {
         ICooker cooker;
-        public IndiaRestaurant(ICooker cooker)
+        public EnglishRestaurant(ICooker cooker)
         {
             this.cooker = cooker;
         }
         /// <summary>
-        /// create masala for restaurant in India
+        /// create masala for restaurant in England
         /// </summary>
         public IMasala CreateMasala()
         {
-            return new MasalaForIndia(cooker);
+            return new MasalaForEngland(cooker);
         }
     }
 }

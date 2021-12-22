@@ -21,19 +21,23 @@ namespace AbstartFactory
         {
             Console.WriteLine("**********************************");
             IAbstractRestaurantFactory factory;
+            IMasala masala;
             switch (country)
             {
                 case Country.Ukraine:
-                    factory = new UkraineRestaurant(cooker);
-                    factory.CreateMasala();
+                    factory = new UkrainianRestaurant(cooker);
+                    masala = factory.CreateMasala();
+                    Console.WriteLine(masala.MasalaInformation());
                     break;
                 case Country.India:
-                    factory = new IndiaRestaurant(cooker);
-                    factory.CreateMasala();
+                    factory = new IndianRestaurant(cooker);
+                    masala = factory.CreateMasala();
+                    Console.WriteLine(masala.MasalaInformation());
                     break;
                 case Country.England:
-                    factory = new EnglandRestaurant(cooker);
-                    factory.CreateMasala();
+                    factory = new EnglishRestaurant(cooker);
+                    masala = factory.CreateMasala();
+                    Console.WriteLine(masala.MasalaInformation());
                     break;
                 default:
                     Console.WriteLine("Sorry, you need use correct County for our cooker.");
